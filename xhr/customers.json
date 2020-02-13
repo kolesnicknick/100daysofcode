@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "name"  : "Niko Kole",
+    "company": "SoftServe"
+  },
+
+  {
+    "id": 2,
+    "name"  : "Anton Kozak",
+    "company": "Murka"
+  },
+
+  {
+    "id": 3,
+    "name"  : "Sveta Mala",
+    "company": "Wix"
+  }
+]
