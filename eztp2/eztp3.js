@@ -43,3 +43,19 @@ class EZTP {
         return resData;
     }
 }
+
+// const http = new EZTP();
+
+
+// const task = {
+//     title: `CREATED VIA API ${Date.now()}`,
+//     duration: "44"
+// }
+
+// http.post("http://127.0.0.1:4724/tasks", task)
+//     .then(console.log)
+//     .catch(console.log);
+
+// http.get("http://127.0.0.1:4724/tasks")
+//     .then(console.log)
+//     .catch(console.log);
