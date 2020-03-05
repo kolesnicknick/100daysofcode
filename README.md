@@ -18,5 +18,5 @@
 
 [Trackalorie](https://kolesnicknick.github.io/100daysofcode/tracalorie/index.html)
 
-[Microposts Project](https://kolesnicknick.github.io/100daysofcode/patterns/index.html)
+[Microposts Project](https://kolesnicknick.github.io/100daysofcode/microposts/index.html)
 
