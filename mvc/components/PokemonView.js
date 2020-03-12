@@ -1,5 +1,6 @@
 export class PokemonView {
     constructor(cback) {
+        this.search = document.querySelector('#searchPoke');
         this.btn = document.querySelector('.btn-poke');
         this.info = document.querySelector('.pokemon-info');
         this.btn.addEventListener('click', cback)

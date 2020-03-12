@@ -2,35 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>MVC</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
+    <style>
+        .column {
+            float: left;
+            width: 48%;
+            padding: 10px;
+            margin-left: 1%;
+        }
+
+        .row:after {
+            height: 100%;
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .column{
+            height: auto;
+        }
+        .vl {
+            border-left: 6px solid black;
+            height: 700px;
+        }
+    </style>
 </head>
-<body>
-<div class="btns">
+<br>
 
-    <button type="button" class="btn btn-success btn-poke">Success</button>
+<div class="container searchContainer">
+    <div class="search card card-body">
+        <h1>Check if Pokemon or Technology</h1>
+
+        <p class="lead">Enter your word and check if it is a pokemon or a real technology</p>
+
+
+            <div class="form-row align-items-center">
+
+                <div class="col-auto">
+                    <input class="form-control" id="searchPoke" placeholder="Your word " type="text">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-success btn-poke" type="button">Submit</button>
+                </div>
+            </div>
+
+    </div>
+
 </div>
-<div class="pokemon-info d-flex">
-    <div class="card" style="width: 8rem;">
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">ivysaur</h5>
+
+<div class="row">
+
+    <div class="column">
+        <div class="pokemon-info d-flex">
+            <div class="card-columns">
+
+
+            </div>
         </div>
     </div>
-    <div class="card" style="width: 8rem;">
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">ivysaur</h5>
+
+    <div class="vl"></div>
+
+    <div class="column">
+        <div class="pokemon-info d-flex">
+            <div class="card-columns">
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<ul>
-    <li>Model</li>
-    <li>View</li>
-    <li>Controller - Mediator - man in the middle of M and V</li>
-</ul>
 
-<script type="module" src="app.js"></script>
+
+<script src="app.js" type="module"></script>
 </body>
 </html>

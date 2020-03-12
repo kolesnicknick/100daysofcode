@@ -8,9 +8,21 @@ export class PokemonModel {
     async getRandomPokemon(){
         const id = Math.floor(Math.random()*this.pokemonMax+1);
         return await fetch(`${this.link}${id}`).then(r=>r.json()).then(data=>{
-            console.log(data)
+            console.log(data);
             this.base.push({
                 id,
+                name: data.name,
+                photo: data.sprites.front_default
+            });
+            return this.base;
+        })
+    }
+
+    async getPokemonByName(name){
+        return await fetch(`${this.link}${name}`).then(r=>r.json()).then(data=>{
+            console.log(data);
+            this.base.push({
+                id: data.id,
                 name: data.name,
                 photo: data.sprites.front_default
             });
