@@ -1,23 +1,21 @@
-import {PokemonModelBase} from "./PokemonModelBase.js";
 
-export class PokemonModel extends PokemonModelBase{
+export class PokemonModel{
     constructor() {
-        super();
         this.link ='https://pokeapi.co/api/v2/pokemon/';
         this.pokemonMax = 807;
-        this.base = [];
+        this.pokebase = [];
     }
 
     async getRandomPokemon(){
         const id = Math.floor(Math.random()*this.pokemonMax+1);
         return await fetch(`${this.link}${id}`).then(r=>r.json()).then(data=>{
             console.log(data);
-            this.base.push({
+            this.pokebase.push({
                 id,
                 name: data.name,
                 photo: data.sprites.front_default
             });
-            return this.base;
+            return this.pokebase;
         })
     }
 
@@ -25,12 +23,14 @@ export class PokemonModel extends PokemonModelBase{
         return fetch(`${this.link}${name}`);
     }
 
-    getPokemons(){
-        return this.base;
+    getBase(){
+        console.log('returning base ');
+        return this.pokebase;
     }
 
-    addPokemonToBase(data){
-        this.base.push({
+    insertInstanceIntoBase(data){
+        console.log('poke inserting ' + data.name);
+        this.pokebase.push({
             id: data.id,
             name: data.name,
             photo: data.sprites.front_default

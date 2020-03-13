@@ -1,18 +1,17 @@
-import {PokemonModelBase} from "./PokemonModelBase.js";
 
-export class TechnologyModel extends PokemonModelBase {
+export class TechnologyModel{
     constructor() {
-        super();
-        this.base = [];
+        this.techbase = [];
     }
 
     getBase() {
-        return this.base
+        return this.techbase
     }
 
-    insertInstanceIntoBase() {
-        this.base.push({
-            name,
+    insertInstanceIntoBase(data) {
+        console.log('tech inserting ' + data.name)
+        this.techbase.push({
+            name: data.name,
         });
     }
 
