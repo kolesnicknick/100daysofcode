@@ -7,7 +7,7 @@
 })();
 //MODULE PATTERN
 
-//UI Controller
+//UI CartController
 const UIctrl = (() => {
     let text = 'hello world';
     const changeText = function () {
