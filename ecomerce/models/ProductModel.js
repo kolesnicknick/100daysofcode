@@ -7,6 +7,14 @@ const client = contentful.createClient({
 });
 
 export class ProductsModel {
+    async getFromFile(){
+        return await fetch('./data.json');
+    }
+
+    async getFromApi(){
+        return await fetch('http://127.0.0.1:12001/products');
+    }
+
     async getProducts() {
         // always returns promise so we can add .then
         // we can use await until promised is settled and return result
