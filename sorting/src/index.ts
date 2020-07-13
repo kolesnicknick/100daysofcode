@@ -1,27 +1,26 @@
-import fs from 'fs';
+import {CsvFileReader} from "./files/CsvFileReader";
+import {MatchResult} from "./types/MatchResult";
+import {MatchData} from "./types/MatchData";
+import {MatchReader} from "./files/MatchReader";
+import { Summary } from "./types/Summary";
+import {PointsAnalysisSingle} from "./analysis/PointsAnalysisSingle";
+import {ConsoleReport} from "./reports/ConsoleReport";
+import {HtmlReport} from "./reports/HtmlReport";
+import {PointsAnalysisMultiple} from "./analysis/PointsAnalyzerMultiple";
 
-const fileContent: string[][] = fs.readFileSync('football.csv',{encoding: "utf-8"})
-    .split('\n')
-    .map((row:string):string[] => row.split(','));
+const fileReader = new MatchReader('football.csv');
+fileReader.read();
+const fileContent: MatchData[] = fileReader.data;
 
-console.log(fileContent)
-let wolvesPoints = 0;
+const summary = new Summary(
+  new PointsAnalysisMultiple(),
+  new HtmlReport()
+)
 
-fileContent.forEach(match => {
-    if (match[1] === 'Wolves' && match[5] === 'H'){
-        console.log('HOME WIN WOLVES')
-        wolvesPoints += 3;
-        console.log(wolvesPoints);
-    }
-    else if (match[2] === 'Wolves' && match[5] === 'A'){
-        console.log('HOME WIN WOLVES')
-        wolvesPoints += 3;
-        console.log(wolvesPoints);
+// const summary2 = new Summary(
+//   new PointsAnalysisSingle('Chelsea'),
+//   new HtmlReport()
+// );
 
-    }
-    else if ((match[1] === 'Wolves' || match[2] === 'Wolves') && match[5] === 'D'){
-        console.log('WOLVES DRAW')
-        wolvesPoints += 1;
-        console.log(wolvesPoints);
-    }
-})
+summary.buildAndPrintReport(fileContent);
+// summary2.buildAndPrintReport(fileContent);
