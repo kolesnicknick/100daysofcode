@@ -1,11 +1,14 @@
 const StorageCtrl = (function () {
 
   return {
-    storeItem: function (){
-
+    syncStorage: function (items) {
+      localStorage.setItem('items', JSON.stringify(items));
     },
 
-  }
+    getItems: function () {
+      return JSON.parse(localStorage.getItem('items')) || [];
+    }
+  };
 })();
 
 const ItemCtrl = (function () {
@@ -27,7 +30,7 @@ const ItemCtrl = (function () {
   return {
     getTotalCalories() {
       let total = 0;
-      state.items.forEach(item => total+=parseInt(item.calories));
+      state.items.forEach(item => total += parseInt(item.calories));
 
       return total;
     },
@@ -36,15 +39,15 @@ const ItemCtrl = (function () {
       return state;
     },
 
-    getCurrent: function(){
+    getCurrent: function () {
       return state.currentItem;
     },
 
-    deleteItem: function(id) {
+    deleteItem: function (id) {
       this.getState().items = this.getState().items.filter(item => item.id !== id);
     },
 
-    updateItem(id, values){
+    updateItem(id, values) {
       const itemToUpdate = this.getState().items.find(item => item.id === id);
       itemToUpdate.name = values.name;
       itemToUpdate.calories = values.calories;
@@ -109,29 +112,29 @@ const UICtrl = (function () {
 
   const clearEditState = function () {
     clearInputFields();
-    console.log('<<<start hiding')
+    console.log('<<<start hiding');
     document.querySelector(UiSelectors.UPDATE_BTN).style.display = 'none';
     document.querySelector(UiSelectors.DELETE_BTN).style.display = 'none';
     document.querySelector(UiSelectors.CANCEL_BTN).style.display = 'none';
     document.querySelector(UiSelectors.ADD_BTN).style.display = 'inline';
-    console.log('>>>end hiding')
+    console.log('>>>end hiding');
   };
 
-  const showEditState = function (item){
+  const showEditState = function (item) {
     document.querySelector(UiSelectors.ITEM_NAME_INPUT).value = item.name;
     document.querySelector(UiSelectors.ITEM_CALORIES_INPUT).value = item.calories;
 
-    console.log('<<<start showing')
+    console.log('<<<start showing');
     document.querySelector(UiSelectors.UPDATE_BTN).style.display = 'inline';
     document.querySelector(UiSelectors.DELETE_BTN).style.display = 'inline';
     document.querySelector(UiSelectors.CANCEL_BTN).style.display = 'inline';
     document.querySelector(UiSelectors.ADD_BTN).style.display = 'none';
-    console.log('>>>end showing')
-  }
+    console.log('>>>end showing');
+  };
 
   const setTotalCalories = function (total) {
     document.querySelector(UiSelectors.TOTAL_CALORIES).textContent = total;
-  }
+  };
 
   return {
     showEditState,
@@ -147,6 +150,15 @@ const UICtrl = (function () {
 
 
 const App = (function (ItemCtrl, UICtrl, StorageCtrl) {
+
+  const reverseSyncStorage = function () {
+    ItemCtrl.getState().items = StorageCtrl.getItems();
+  };
+
+  const syncStorage = function () {
+    const items = ItemCtrl.getState().items;
+    StorageCtrl.syncStorage(items);
+  };
 
   const updateUI = function () {
     UICtrl.clearEditState();
@@ -172,7 +184,7 @@ const App = (function (ItemCtrl, UICtrl, StorageCtrl) {
 
     document.querySelector(SELECTORS.ADD_BTN).addEventListener('click', itemAddSubmit);
 
-    document.querySelector(SELECTORS.ITEM_LIST).addEventListener('click', itemUpdateSubmit)
+    document.querySelector(SELECTORS.ITEM_LIST).addEventListener('click', itemUpdateSubmit);
 
     document.querySelector(SELECTORS.CARD_CONTENT).addEventListener('click', handleEdit);
 
@@ -181,27 +193,29 @@ const App = (function (ItemCtrl, UICtrl, StorageCtrl) {
 
   const handleClear = function (e) {
     ItemCtrl.getState().items = [];
-
+    syncStorage();
     updateUI();
-
     e.preventDefault();
   };
 
   const handleEdit = function (e) {
     const current = ItemCtrl.getCurrent();
 
-    if(e.target.classList.contains('cancel-btn')){
-     UICtrl.clearEditState();
+    if (e.target.classList.contains('cancel-btn')) {
+      UICtrl.clearEditState();
     }
 
-    if(e.target.classList.contains('update-btn')){
+    if (e.target.classList.contains('update-btn')) {
       ItemCtrl.updateItem(current.id, UICtrl.getItemInput());
+      syncStorage();
       updateUI();
     }
 
-    if(e.target.classList.contains('delete-btn')){
+    if (e.target.classList.contains('delete-btn')) {
       ItemCtrl.deleteItem(current.id);
       ItemCtrl.getState().items = ItemCtrl.getState().items.filter(item => item.id !== current.id);
+
+      syncStorage();
       updateUI();
     }
 
@@ -213,14 +227,15 @@ const App = (function (ItemCtrl, UICtrl, StorageCtrl) {
 
     if (item.name !== '' && item.calories) {
       ItemCtrl.setItem(item);
+      syncStorage();
       updateUI();
     }
 
     e.preventDefault();
   };
 
-  const itemUpdateSubmit = function (e){
-    if(e.target.classList.contains('edit-item')){
+  const itemUpdateSubmit = function (e) {
+    if (e.target.classList.contains('edit-item')) {
       console.log('EDIT');
       const itemId = parseInt(e.target.parentNode.parentNode.id.split('-')[1]);
       ItemCtrl.getState().currentItem = ItemCtrl.getState().items.find(i => i.id === itemId);
@@ -228,15 +243,16 @@ const App = (function (ItemCtrl, UICtrl, StorageCtrl) {
     }
 
     e.preventDefault();
-  }
+  };
 
   return {
     init: function () {
+      reverseSyncStorage();
       updateUI();
       loadEventListeners();
     }
   };
-})(ItemCtrl, UICtrl);
+})(ItemCtrl, UICtrl, StorageCtrl);
 
 App.init();
 
