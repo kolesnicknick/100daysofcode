@@ -12,6 +12,7 @@
 // fileReader.read();
 // const fileContent: MatchData[] = fileReader.data;
 //
+
 // const summary = new Summary(
 //   new PointsAnalysisMultiple(),
 //   new HtmlReport()
@@ -26,12 +27,10 @@
 // // summary2.buildAndPrintReport(fileContent);
 
 
-import path from "path";
-
-enum Hello {
-  HELLO= 'whats up'
+enum UnsupportedLoTypes {
+  authoring = 'authoring',
 }
 
-path.resolve(__dirname, '..', '..', 'client', 'build', 'index.html');
+const a = 'authoring';
 
-console.log(Hello.HELLO);
+console.log((<any>Object).values(UnsupportedLoTypes).includes(a));
